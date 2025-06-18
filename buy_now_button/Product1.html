@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shoe App - Micro Color Selectors</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .app-container {
+      max-width: 420px;
+      margin: auto;
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .content {
+      padding: 16px;
+    }
+
+    .product-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .product-subtitle {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #28a745;
+      margin-bottom: 12px;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+    }
+
+    .color-selector {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+      justify-content: center;
+    }
+
+    .color-thumb {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      object-fit: cover;
+    }
+
+    .color-thumb.active {
+      border-color: #007bff;
+    }
+
+    .thumbnails {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .thumbnails img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .thumbnails img.active {
+      border-color: #007bff;
+    }
+
+    .button-group {
+      margin-top: auto;
+      padding: 16px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .app-button {
+      flex: 1;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+
+    .cart-btn {
+      background: linear-gradient(135deg, #28a745, #218838);
+      color: #fff;
+    }
+
+    .wishlist-btn {
+      background: #e9ecef;
+      color: #333;
+      border: 1px solid #ccc;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <div class="main-image">
+    <img id="mainImage" src="" alt="Shoe Product">
+  </div>
+
+  <div class="content">
+    <div class="product-title">Campus Men's</div>
+    <div class="product-subtitle">Men's Golf Shoes</div>
+    <div class="price">MRP: ₹<span id="mrpValue">1965.00</span></div>
+
+    <label for="size">Select Size:</label>
+    <select id="size" onchange="updateMRP()">
+      <option value="1965">6</option>
+      <option value="1999">7</option>
+      <option value="2049">8</option>
+      <option value="2099">9</option>
+    </select>
+
+    <label>Choose Color:</label>
+    <div class="color-selector" id="colorSelector">
+      <!-- Color thumbnails will be injected here -->
+    </div>
+
+    <div class="thumbnails" id="thumbnailContainer">
+      <!-- Product thumbnails here -->
+    </div>
+  </div>
+
+  <div class="button-group">
+    <button class="app-button cart-btn" onclick="add()">Add to Cart</button>
+    <button class="app-button wishlist-btn">Wishlist</button>
+  </div>
+</div>
+
+<script>
+  const productData = {
+    black: {
+      preview: "https://m.media-amazon.com/images/I/61q46ZUUugL._SY500_.jpg",
+      images: [
+        "https://m.media-amazon.com/images/I/61q46ZUUugL._SY500_.jpg",
+        "https://m.media-amazon.com/images/I/61UDmS4jSoL._SY500_.jpg",
+        "https://m.media-amazon.com/images/I/813CtVbqaLL._SY500_.jpg"
+      ],
+      prices: ["1965", "1999", "2049", "2099"]
+    },
+    white: {
+      preview: "https://m.media-amazon.com/images/I/41mWz2aRrTL._SY500_.jpg",
+      images: [
+        "https://m.media-amazon.com/images/I/41mWz2aRrTL._SY500_.jpg",
+        "https://m.media-amazon.com/images/I/61XOptqxmBL._SY500_.jpg",
+        "https://m.media-amazon.com/images/I/716cBIZmfFL._SY500_.jpg"
+      ],
+      prices: ["1765", "1799", "1849", "1899"]
+    },
+    blue: {
+      preview: "https://m.media-amazon.com/images/I/61cmtAAuQvL._SY500_.jpg",
+      images: [
+        "https://m.media-amazon.com/images/I/61cmtAAuQvL._SY500_.jpg",
+        "https://m.media-amazon.com/images/I/61N+Wn+k6EL._SY500_.jpg",
+        "https://m.media-amazon.com/images/I/91rvtovlOOL._SY500_.jpg"
+      ],
+      prices: ["1865", "1899", "1949", "1999"]
+    }
+  };
+
+  let currentColor = "black";
+
+  function updateMRP() {
+    const sizeIndex = document.getElementById("size").selectedIndex;
+    const price = productData[currentColor].prices[sizeIndex];
+    document.getElementById("mrpValue").innerText = parseFloat(price).toFixed(2);
+  }
+
+  function changeColor(color) {
+    currentColor = color;
+
+    // Set active micro image
+    document.querySelectorAll(".color-thumb").forEach(img => img.classList.remove("active"));
+    document.querySelector(`.color-thumb[data-color="${color}"]`).classList.add("active");
+
+    // Update main image and thumbnails
+    const mainImage = productData[color].images[0];
+    document.getElementById("mainImage").src = mainImage;
+
+    const thumbContainer = document.getElementById("thumbnailContainer");
+    thumbContainer.innerHTML = "";
+
+    productData[color].images.forEach((src, i) => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.className = i === 0 ? "active" : "";
+      img.onclick = () => {
+        document.getElementById("mainImage").src = src;
+        document.querySelectorAll("#thumbnailContainer img").forEach(t => t.classList.remove("active"));
+        img.classList.add("active");
+      };
+      thumbContainer.appendChild(img);
+    });
+
+    updateMRP();
+  }
+
+  function loadColorSelectors() {
+    const container = document.getElementById("colorSelector");
+    for (const color in productData) {
+      const thumb = document.createElement("img");
+      thumb.src = productData[color].preview;
+      thumb.className = "color-thumb";
+      thumb.setAttribute("data-color", color);
+      thumb.onclick = () => changeColor(color);
+      container.appendChild(thumb);
+    }
+  }
+
+  function add(){
+    showTost("🛒 Added to cart successfully!")
+  }
+
+  window.onload = () => {
+    loadColorSelectors();
+    changeColor("black");
+  };
+</script>
+
+</body>
+</html>

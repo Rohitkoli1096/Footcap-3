@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Shoe App - adidas Men Courun</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .app-container {
+      max-width: 420px;
+      margin: auto;
+      background: #ffffff;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-image img {
+      width: 100%;
+      height: auto;
+      object-fit: cover;
+    }
+
+    .content {
+      padding: 16px;
+    }
+
+    .product-title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    .product-subtitle {
+      font-size: 14px;
+      color: #777;
+      margin-bottom: 12px;
+    }
+
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #28a745;
+      margin-bottom: 12px;
+    }
+
+    select {
+      width: 100%;
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #ccc;
+      margin-bottom: 15px;
+    }
+
+    .color-selector {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 18px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .color-thumb {
+      width: 50px;
+      height: 50px;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      cursor: pointer;
+      object-fit: cover;
+    }
+
+    .color-thumb.active {
+      border-color: #007bff;
+    }
+
+    .thumbnails {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .thumbnails img {
+      width: 70px;
+      height: 70px;
+      object-fit: contain;
+      border-radius: 8px;
+      border: 2px solid transparent;
+      cursor: pointer;
+    }
+
+    .thumbnails img.active {
+      border-color: #007bff;
+    }
+
+    .button-group {
+      margin-top: auto;
+      padding: 16px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .app-button {
+      flex: 1;
+      padding: 14px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+
+    .cart-btn {
+      background: linear-gradient(135deg, #28a745, #218838);
+      color: #fff;
+    }
+
+    .wishlist-btn {
+      background: #e9ecef;
+      color: #333;
+      border: 1px solid #ccc;
+    }
+
+    #toast {
+      display: none;
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #28a745;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: bold;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+<div class="app-container">
+  <div class="main-image">
+    <img id="mainImage" src="" alt="Shoe Product">
+  </div>
+
+  <div class="content">
+    <div class="product-title">Reebok</div>
+    <div class="product-subtitle">Running Shoes For Mens</div>
+    <div class="price">MRP: ₹<span id="mrpValue">859.00</span></div>
+
+    <label for="size">Select Size:</label>
+    <select id="size" onchange="updateMRP()">
+      <option value="1750">6</option>
+      <option value="1750">7</option>
+      <option value="1750">8</option>
+      <option value="1750">9</option>
+    </select>
+
+    <label>Choose Color:</label>
+    <div class="color-selector" id="colorSelector">
+      <!-- Thumbnails auto-loaded -->
+    </div>
+
+    <div class="thumbnails" id="thumbnailContainer">
+      <!-- Thumbnails auto-loaded -->
+    </div>
+  </div>
+
+  <div class="button-group">
+    <button class="app-button cart-btn" onclick="add()">Add to Cart</button>
+    <button class="app-button wishlist-btn">Wishlist</button>
+  </div>
+</div>
+
+<div id="toast"></div>
+
+<script>
+  const productData = {
+    white: {
+      preview: "https://m.media-amazon.com/images/I/81qXUHh48wL._SX500_.jpg",
+      images: [
+    "https://m.media-amazon.com/images/I/81qXUHh48wL._SX500_.jpg",
+      "https://m.media-amazon.com/images/I/71oHUU15FvL._SX500_.jpg",
+    "https://m.media-amazon.com/images/I/71tKPqv8XQL._SX500_.jpg"  ],
+     prices: ["600","600","600","600"]
+    },
+    black: {
+      preview: "https://m.media-amazon.com/images/I/81UgOMv46aL._SX500_.jpg",
+       images: [ "https://m.media-amazon.com/images/I/81UgOMv46aL._SX500_.jpg",
+       "https://m.media-amazon.com/images/I/81G85fmmWKL._SX500_.jpg",
+        "https://m.media-amazon.com/images/I/71Qd+VQxTKL._SX500_.jpg"
+      ],
+      prices: ["900","900","900","900"]
+    }
+  };
+
+  let currentColor = "white";
+
+  function updateMRP() {
+    const sizeIndex = document.getElementById("size").selectedIndex;
+    const price = productData[currentColor].prices[sizeIndex];
+    document.getElementById("mrpValue").innerText = parseFloat(price).toFixed(2);
+  }
+
+  function changeColor(color) {
+    currentColor = color;
+
+    document.querySelectorAll(".color-thumb").forEach(img => img.classList.remove("active"));
+    document.querySelector(`.color-thumb[data-color="${color}"]`).classList.add("active");
+
+    const mainImage = productData[color].images[0];
+    document.getElementById("mainImage").src = mainImage;
+
+    const thumbContainer = document.getElementById("thumbnailContainer");
+    thumbContainer.innerHTML = "";
+
+    productData[color].images.forEach((src, i) => {
+      const img = document.createElement("img");
+      img.src = src;
+      img.className = i === 0 ? "active" : "";
+      img.onclick = () => {
+        document.getElementById("mainImage").src = src;
+        document.querySelectorAll("#thumbnailContainer img").forEach(t => t.classList.remove("active"));
+        img.classList.add("active");
+      };
+      thumbContainer.appendChild(img);
+    });
+
+    updateMRP();
+  }
+
+  function loadColorSelectors() {
+    const container = document.getElementById("colorSelector");
+    for (const color in productData) {
+      const thumb = document.createElement("img");
+      thumb.src = productData[color].preview;
+      thumb.className = "color-thumb";
+      thumb.setAttribute("data-color", color);
+      thumb.onclick = () => changeColor(color);
+      container.appendChild(thumb);
+    }
+  }
+
+  function add(){
+    showToast("🛒 Added to cart successfully!");
+  }
+
+  function showToast(message) {
+    const toast = document.getElementById("toast");
+    toast.innerText = message;
+    toast.style.display = "block";
+    setTimeout(() => {
+      toast.style.display = "none";
+    }, 3000);
+  }
+
+  window.onload = () => {
+    loadColorSelectors();
+    changeColor("white");
+  };
+</script>
+
+</body>
+</html>
