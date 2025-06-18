@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Footcap - Find your footware</title>
+
+  <!-- 
+    - favicon
+  -->
+  <link rel="shortcut icon" href="./favicon.svg" type="image/svg+xml">
+
+  <!-- 
+    - custom css link
+  -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <!-- 
+    - google font link
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@300;400;500;600;700&family=Roboto:wght@400;500;700&display=swap"
+    rel="stylesheet">
+
+  <!-- 
+    - preload banner
+  -->
+  <link rel="preload" href="./assets/images/hero-banner.png" as="image">
+  <style>
+    * {
+      box-sizing: border-box;
+      padding: 0;
+      margin: 0;
+    }
+
+    body {
+      font-family: 'Josefin Sans', sans-serif;
+      background-color: #f9f9f9;
+      color: #333;
+      padding: 40px 20px;
+    }
+
+    .contact-section {
+      max-width: 1100px;
+      margin: auto;
+      background: #fff;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .map-container iframe {
+      width: 100%;
+      height: 100%;
+      min-height: 350px;
+      border: none;
+    }
+
+    .contact-info {
+      padding: 40px 30px;
+    }
+
+    .contact-info h2 {
+      font-size: 28px;
+      margin-bottom: 25px;
+      color: #1a1a1a;
+    }
+
+    .contact-info ul {
+      list-style: none;
+    }
+
+    .contact-info li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 20px;
+      font-size: 16px;
+      color: #555;
+    }
+
+    .contact-info li ion-icon {
+      font-size: 22px;
+      color: #007bff;
+      margin-right: 12px;
+      min-width: 24px;
+    }
+
+    @media (max-width: 768px) {
+      .contact-section {
+        grid-template-columns: 1fr;
+      }
+
+      .contact-info {
+        padding: 30px 20px;
+      }
+    }
+  </style>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+</head>
+
+<body id="top">
+
+  <!-- 
+    - #HEADER
+  -->
+
+  <header class="header" data-header>
+    <div class="container">
+
+      <div class="overlay" data-overlay></div>
+
+      <a href="#" class="logo">
+        <img src="./assets/images/logo.svg" width="160" height="50" alt="Footcap logo">
+      </a>
+
+      <button class="nav-open-btn" data-nav-open-btn aria-label="Open Menu">
+        <ion-icon name="menu-outline"></ion-icon>
+      </button>
+
+      <nav class="navbar" data-navbar>
+
+        <button class="nav-close-btn" data-nav-close-btn aria-label="Close Menu">
+          <ion-icon name="close-outline"></ion-icon>
+        </button>
+
+        <a href="#" class="logo">
+          <img src="./assets/images/logo.svg" width="190" height="50" alt="Footcap logo">
+        </a>
+
+        <ul class="navbar-list">
+
+          <li class="navbar-item">
+            <a href="index.html" class="navbar-link">Home</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="footabout.html" class="navbar-link">About</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="footproduct.html" class="navbar-link">Products</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="footshop.html" class="navbar-link">Shop</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="footblog.html" class="navbar-link">Blog</a>
+          </li>
+
+          <li class="navbar-item">
+            <a href="footcontact.html" class="navbar-link">Contact</a>
+          </li>
+
+        </ul>
+
+        <ul class="nav-action-list">
+
+          <li>
+            <button class="nav-action-btn">
+              <ion-icon name="search-outline" aria-hidden="true"></ion-icon>
+
+              <span class="nav-action-text">Search</span>
+            </button>
+          </li>
+
+          <li>
+            <a href="#" class="nav-action-btn">
+              <ion-icon name="person-outline" aria-hidden="true"></ion-icon>
+
+              <span class="nav-action-text">Login / Register</span>
+            </a>
+          </li>
+
+          <li>
+            <button class="nav-action-btn">
+              <ion-icon name="heart-outline" aria-hidden="true"></ion-icon>
+
+              <span class="nav-action-text">Wishlist</span>
+
+              <data class="nav-action-badge" value="5" aria-hidden="true">5</data>
+            </button>
+          </li>
+
+          <li>
+            <button class="nav-action-btn">
+              <ion-icon name="bag-outline" aria-hidden="true"></ion-icon>
+
+              <data class="nav-action-text" value="318.00">Basket: <strong>₹ 3180.00</strong></data>
+
+              <data class="nav-action-badge" value="4" aria-hidden="true">4</data>
+            </button>
+          </li>
+
+        </ul>
+
+      </nav>
+
+    </div>
+  </header>
+
+
+
+
+
+  <main>
+    <article>
+
+      <!-- 
+        - #HERO
+      -->
+      <br>    <br>    <br>    <br>    <br>    <br>
+
+      <section class="contact-section">
+        <div class="map-container">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3751.7196237227766!2d75.1099996!3d20.9445593!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bd88f99eb7ae90d%3A0xfce221222a5aeec!2sBhilali%2C%20Maharashtra%20425111!5e0!3m2!1sen!2sin!4v1718295029227!5m2!1sen!2sin"
+            loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+        </div>
+    
+        <div class="contact-info">
+          <h2>Contact Us</h2>
+          <ul>
+            <li><ion-icon name="call-outline"></ion-icon> <span>+91 7020572471</span></li>
+            <li><ion-icon name="location-outline"></ion-icon> <span>At Post Bhilali, Tal-Parola, Dist-Jalgoan, Maharashtra, India</span></li>
+            <li><ion-icon name="mail-outline"></ion-icon> <span><a href="kolirohit1e@gmail.com">kolirohit1e@gmail.com</a></span></li>
+            <li><ion-icon name="time-outline"></ion-icon> <span>Open: Mon-Sat, 8AM - 10PM</span></li>
+          </ul>
+        </div>
+      </section>
+              
+        </div>
+      </section>
+    </section>
+
+
+  <!-- 
+    - #FOOTER
+  -->
+
+  <footer class="footer">
+
+    <div class="footer-top section">
+      <div class="container">
+
+        <div class="footer-brand">
+
+          <a href="#" class="logo">
+            <img src="./assets/images/logo.svg" width="160" height="50" alt="Footcap logo">
+          </a>
+
+          <ul class="social-list">
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-facebook"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-twitter"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-pinterest"></ion-icon>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="social-link">
+                <ion-icon name="logo-linkedin"></ion-icon>
+              </a>
+            </li>
+
+          </ul>
+
+        </div>
+
+        <div class="footer-link-box">
+
+          <ul class="footer-list">
+
+            <li>
+              <p class="footer-list-title">Contact Us</p>
+            </li>
+
+            <li>
+              <address class="footer-link">
+                <ion-icon name="location"></ion-icon>
+
+                <span class="footer-link-text">
+                 At Post Bhilali Tal-Parola, Dist-JAlgoan
+                </span>
+              </address>
+            </li>
+
+            <li>
+              <a href="tel:+557343673257" class="footer-link">
+                <ion-icon name="call"></ion-icon>
+
+                <span class="footer-link-text">+91 7020572471</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="mailto:footcap@help.com" class="footer-link">
+                <ion-icon name="mail"></ion-icon>
+
+                <span class="footer-link-text">KoliRohit1e@gmail.com</span>
+              </a>
+            </li>
+
+          </ul>
+
+          <ul class="footer-list">
+
+            <li>
+              <p class="footer-list-title">My Account</p>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                <span class="footer-link-text">My Account</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                <span class="footer-link-text">View Cart</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                <span class="footer-link-text">Wishlist</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                <span class="footer-link-text">Compare</span>
+              </a>
+            </li>
+
+            <li>
+              <a href="#" class="footer-link">
+                <ion-icon name="chevron-forward-outline"></ion-icon>
+
+                <span class="footer-link-text">New Products</span>
+              </a>
+            </li>
+
+          </ul>
+
+          <div class="footer-list">
+
+            <p class="footer-list-title">Opening Time</p>
+
+            <table class="footer-table">
+              <tbody>
+
+                <tr class="table-row">
+                  <th class="table-head" scope="row">Mon - Tue:</th>
+
+                  <td class="table-data">8AM - 10PM</td>
+                </tr>
+
+                <tr class="table-row">
+                  <th class="table-head" scope="row">Wed:</th>
+
+                  <td class="table-data">8AM - 7PM</td>
+                </tr>
+
+                <tr class="table-row">
+                  <th class="table-head" scope="row">Fri:</th>
+
+                  <td class="table-data">7AM - 12PM</td>
+                </tr>
+
+                <tr class="table-row">
+                  <th class="table-head" scope="row">Sat:</th>
+
+                  <td class="table-data">9AM - 8PM</td>
+                </tr>
+
+                <tr class="table-row">
+                  <th class="table-head" scope="row">Sun:</th>
+
+                  <td class="table-data"><p style="color: red;">Closed</p></td>
+                </tr>
+
+              </tbody>
+            </table>
+
+          </div>
+
+          <div class="footer-list">
+
+            <p class="footer-list-title">Newsletter</p>
+
+            <p class="newsletter-text">
+              Authoritatively morph 24/7 potentialities with error-free partnerships.
+            </p>
+
+            <form action="" class="newsletter-form">
+              <input type="email" name="email" required placeholder="Email Address" class="newsletter-input">
+
+              <button type="submit" class="btn btn-primary">Subscribe</button>
+            </form>
+
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <div class="container">
+
+        <p class="copyright">
+          &copy; 2025 <a href="#" class="copyright-link">KoliRohit1e</a>. All Rights Reserved
+        </p>
+
+      </div>
+    </div>
+
+  </footer>
+
+
+
+
+
+  <!-- 
+    - #GO TO TOP
+  -->
+
+  <a href="#top" class="go-top-btn" data-go-top>
+    <ion-icon name="arrow-up-outline"></ion-icon>
+  </a>
+
+
+
+
+
+  <!-- 
+    - custom js link
+  -->
+  <script src="./assets/js/script.js"></script>
+
+  <!-- 
+    - ionicon link
+  -->
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+
+</body>
+
+</html>
